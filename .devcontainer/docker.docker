@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/vscode/devcontainers/php:7.4
+FROM mcr.microsoft.com/vscode/devcontainers/php:7.4-apache
 
 # Install additional dependencies
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -13,13 +13,17 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # Configure PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd \
-    && docker-php-ext-install zip
+    && docker-php-ext-install zip \
+    && docker-php-ext-install mysqli
+
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Set up working directory
-WORKDIR /workspace
+WORKDIR /var/www/html
 
 # Install WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
