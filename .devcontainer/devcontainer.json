@@ -1,0 +1,19 @@
+{
+    "name": "WordPress Development",
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
+    "settings": {
+      "terminal.integrated.defaultProfile.linux": "bash"
+    },
+    "extensions": [
+      "ms-azuretools.vscode-docker",
+      "bmewburn.vscode-intelephense-client",
+      "esbenp.prettier-vscode"
+    ],
+    "forwardPorts": [
+      80
+    ],
+    "postCreateCommand": "bash .devcontainer/setup.sh"
+  }
+  
